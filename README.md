@@ -12,3 +12,5 @@ Use the scripts in the following order:
 4. Stored Procedure Partition Maintenance.
 
 5. Stored Procedure Partition Maintenance all
+    Check the values in this file because this will be used to determine how long data will be preserved!
+    
