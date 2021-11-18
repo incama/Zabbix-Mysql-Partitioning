@@ -1,0 +1,31 @@
+DELIMITER $$
+CREATE PROCEDURE `partition_create`(SCHEMANAME varchar(64), TABLENAME varchar(64), PARTITIONNAME varchar(64), CLOCK int)
+BEGIN
+        /*
+           SCHEMANAME = The DB schema in which to make changes
+           TABLENAME = The table with partitions to potentially delete
+           PARTITIONNAME = The name of the partition to create
+        */
+        /*
+           Verify that the partition does not already exist
+        */
+
+        DECLARE RETROWS INT;
+        SELECT COUNT(1) INTO RETROWS
+        FROM information_schema.partitions
+        WHERE table_schema = SCHEMANAME AND table_name = TABLENAME AND partition_description >= CLOCK;
+
+        IF RETROWS = 0 THEN
+                /*
+                   1. Print a message indicating that a partition was created.
+                   2. Create the SQL to create the partition.
+                   3. Execute the SQL from #2.
+                */
+                SELECT CONCAT( "partition_create(", SCHEMANAME, ",", TABLENAME, ",", PARTITIONNAME, ",", CLOCK, ")" ) AS msg;
+                SET @sql = CONCAT( 'ALTER TABLE ', SCHEMANAME, '.', TABLENAME, ' ADD PARTITION (PARTITION ', PARTITIONNAME, ' VALUES LESS THAN (', CLOCK, '));' );
+                PREPARE STMT FROM @sql;
+                EXECUTE STMT;
+                DEALLOCATE PREPARE STMT;
+        END IF;
+END$$
+DELIMITER ;
