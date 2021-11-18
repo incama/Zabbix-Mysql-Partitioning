@@ -1,5 +1,5 @@
 # Zabbix Mysql Partitioning using Stored Procedures
-These scripts aren't mine but try to preserve them from being lost in space. These scripts will create partitions for your history and trends tables. I have tested them in Oracle's Mysql version 5.7 and 8.0 and they work. Just make sure the event_scheduler is set to ON in your Mysql instance!
+These scripts aren't mine but try to preserve them from being lost in space. These scripts will create partitions for your history and trends tables. I have tested them in Oracle's Mysql version **5.7** and **8.0** and they work. Just make sure the **event_scheduler** is set to **ON** in your Mysql config!
 
 Use the scripts in the following order:
 
@@ -11,6 +11,9 @@ Use the scripts in the following order:
 
 4. Stored Procedure Partition Maintenance.
 
-5. Stored Procedure Partition Maintenance all
-    Check the values in this file because this will be used to determine how long data will be preserved!
+5. Stored Procedure Partition Maintenance all ***(Check the values in this file because this will be used to determine how long data will be preserved!)***.
+
+6. Mysql Create Event
+
+7. Disable the Housekeeper tasks for History and Trends within you Zabbix instance! 
     
